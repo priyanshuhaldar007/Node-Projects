@@ -1,0 +1,13 @@
+POST http://localhost:5050/shorten
+content-type: application/json
+
+{
+    "url": "http://www.google.com/"
+}
+###
+
+GET http://localhost:5050/WsaDyWuB
+
+###
+
+GET http://localhost:5050/analytics/WsaDyWuB
