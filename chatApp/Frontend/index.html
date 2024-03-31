@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src *;"> -->
+        <title>Document</title>
+        <link rel="stylesheet" href="./style.css" />
+    </head>
+    <body>
+        <div class="chat-wrapper">
+            <header class="chat-header">
+                <div class="user-info">
+                    <img
+                        src="profile-picture.png"
+                        alt="Profile Picture"
+                        class="profile-pic"
+                    />
+                    <div class="username">Your Name</div>
+                </div>
+                <div class="header-icons">
+                    <i class="fas fa-search"></i>
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+            </header>
+            <main class="chat-main">
+                <div class="chat-list"></div>
+                <div class="active-chat">
+                    <div class="chat-history"></div>
+                    <form class="chat-input-form" method="#">
+                        <input
+                            type="text"
+                            name="message"
+                            placeholder="Type a message..."
+                            required
+                            id="inputMessage"
+                         />
+                        <button id="sendBtn" type="submit">Send</button>
+                    </form>
+                </div>
+            </main>
+        </div>
+        <script
+            src="https://kit.fontawesome.com/your-fontawesome-kit-code.js"
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+        <script>
+            const socket = io("http://localhost:5050");
+
+            const sendBtn = document.getElementById('sendBtn');
+            const inputMsg = document.getElementById('inputMessage');
+
+            sendBtn.addEventListener('click',(e)=>{
+                e.preventDefault();
+                socket.emit('send',inputMsg.value);
+            })
+
+            socket.on("message",message=>{
+                console.log(message, socket);
+            });
+        </script>
+    </body>
+</html>
