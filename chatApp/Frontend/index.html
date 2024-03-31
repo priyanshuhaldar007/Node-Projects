@@ -16,7 +16,7 @@
                         alt="Profile Picture"
                         class="profile-pic"
                     />
-                    <div class="username">Your Name</div>
+                    <div id="name" class="username">Your Name</div>
                 </div>
                 <div class="header-icons">
                     <i class="fas fa-search"></i>
@@ -50,15 +50,29 @@
 
             const sendBtn = document.getElementById('sendBtn');
             const inputMsg = document.getElementById('inputMessage');
-
+            const name = document.getElementById('name');
+            
             sendBtn.addEventListener('click',(e)=>{
                 e.preventDefault();
-                socket.emit('send',inputMsg.value);
+                const timestamp = new Date(Date.now());
+                const data = inputMsg.value.split('|');
+                const message = data[0]; 
+                socket.emit('send',{msg: message, time: timestamp, toId: data[1]});
             })
 
-            socket.on("message",message=>{
-                console.log(message, socket);
+            socket.on('connect', () => {
+                console.log(socket.id); // an alphanumeric id...
+                name.innerText = socket.id;
             });
+
+            socket.on("message",message=>{
+                console.log(message);
+            });
+
+            socket.on("user joined",message=>{
+                console.log(message);
+            });
+
         </script>
     </body>
 </html>

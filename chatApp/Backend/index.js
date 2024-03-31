@@ -9,12 +9,23 @@ const server = http.createServer(app);
 const io = new Server(server, {cors: {origin: "*"}});
 
 
-io.on('connection',(socket)=>{
+io.on('connection', (socket)=>{
     console.log('User connected', socket.id);
-    socket.on('send',(message)=>{
-        console.log('a new user-message',message);
-        io.emit('message', message);
+    socket.on('send', (message)=>{
+        console.log(message);
+        if(message.toId){
+            console.log(`DM to ${message.toId}`);
+            io.to(message.toId).emit('message',[message.msg, message.time])
+        }
+        else{
+            console.log('grp');
+            io.emit('message', [socket.id, message] );
+        }
     });
+
+    io.emit('user joined', {userId:socket.id})
+
+    
 })
 
 

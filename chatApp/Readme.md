@@ -1,2 +1,2 @@
-# Chat App V1
-This is a simple implementation of websockets using socket.io library. Here the user sends the texts to server and the server emits the message to all the connected users.
+# Chat App V2
+This is a simple implementation of websockets using socket.io library. Here the user sends the texts to server and the server emits the message to all the connected users. Also the user can send text messages to specific users by passing their ID along with the message.
